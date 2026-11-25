@@ -1,0 +1,51 @@
+{
+  "name": "Flinn Pulse - review-only webhook",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "flinn-pulse-review",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "pulse-webhook",
+      "name": "Receive proposal",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const p = $input.first().json.body ?? $input.first().json;\nif (!p.event_id || p.review_required !== true || p.mode !== 'demo_review_only') { throw new Error('Invalid review-only payload'); }\nreturn [{json: {event_id: p.event_id, status: 'review_required', slack_preview: p.slack, note: 'No outbound Slack node is configured.'}}];"
+      },
+      "id": "pulse-review",
+      "name": "Validate review envelope",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Receive proposal": {
+      "main": [
+        [
+          {
+            "node": "Validate review envelope",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

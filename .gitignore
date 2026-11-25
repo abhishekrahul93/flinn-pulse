@@ -1,0 +1,15 @@
+target/
+logs/
+*.duckdb
+*.duckdb.wal
+__pycache__/
+.venv/
+.DS_Store
+
+
+# Local credentials and generated download bundles
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+dist/Flinn_Pulse_Source.zip

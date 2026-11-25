@@ -1,0 +1,13 @@
+name: flinn_pulse
+version: '1.0.0'
+config-version: 2
+profile: flinn_pulse
+model-paths: [warehouse/models]
+seed-paths: [data/generated]
+test-paths: [tests]
+target-path: target
+clean-targets: [target, dbt_packages]
+models:
+  flinn_pulse:
+    +materialized: table
+
